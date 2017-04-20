@@ -170,7 +170,8 @@ view: all_events {
       field: event_type
       value: "Bike"
     }
-  }
+    drill_fields: [detail*]
+    }
 
   measure: vehicle_events {
     type: count
@@ -178,7 +179,8 @@ view: all_events {
       field: event_type
       value: "Vehicle"
     }
-  }
+    drill_fields: [detail*]
+    }
 
   measure: not_yield_events {
     type: count
@@ -186,7 +188,8 @@ view: all_events {
       field: event_type
       value: "Not Yield"
     }
-  }
+    drill_fields: [detail*]
+    }
 
   measure: pedestrian_events {
     type: count
@@ -194,7 +197,8 @@ view: all_events {
       field: event_type
       value: "Pedestrian"
     }
-  }
+    drill_fields: [detail*]
+    }
 
   measure: vehicle_speed_toward_intersection {
     type: count
@@ -202,7 +206,18 @@ view: all_events {
       field: event_type
       value: "Vehicle_speed_toward_intersection"
     }
-  }
+    drill_fields: [detail*]
+    }
+
+  measure: average_speed {
+    type: average
+    sql: ${speed} ;;
+    filters: {
+      field: event_type
+      value: "Vehicle_speed_toward_intersection"
+    }
+    drill_fields: [detail*]
+    }
 
   dimension: batch_id {
     type: number
@@ -226,13 +241,29 @@ view: all_events {
 
   dimension: heading_from {
     type: string
-    sql: ${TABLE}.heading_from ;;
+    sql: CASE WHEN heading_from = 'BE'
+                THEN 'Beacon East'
+              WHEN heading_from = 'BW'
+                THEN 'Beacon West'
+              WHEN heading_from = 'MN'
+                THEN 'Mass North'
+              WHEN heading_from = 'MS'
+                THEN 'Mass South'
+              END;;
   }
 
   dimension: heading_to {
     type: string
-    sql: ${TABLE}.heading_to ;;
-  }
+    sql: CASE WHEN heading_to = 'BE'
+                THEN 'Beacon East'
+              WHEN heading_to = 'BW'
+                THEN 'Beacon West'
+              WHEN heading_to = 'MN'
+                THEN 'Mass North'
+              WHEN heading_to = 'MS'
+                THEN 'Mass South'
+         END;;
+    }
 
   dimension: intersection {
     type: string
@@ -255,6 +286,11 @@ view: all_events {
       raw,
       time,
       time_of_day,
+      minute5,
+      minute15,
+      minute30,
+      hour6,
+      hour12,
       hour,
       hour_of_day,
       date,
@@ -266,10 +302,12 @@ view: all_events {
       quarter,
       year
     ]
+    drill_fields: [event_week, event_date, event_hour, event_minute30, event_minute15, event_minute5]
     sql: ${TABLE}.time ;;
   }
 
   dimension: tl_phase {
+    label: "Traffic Light Phase"
     type: string
     sql: ${TABLE}.tl_phase ;;
   }
@@ -298,7 +336,7 @@ view: all_events {
   dimension: is_vehicle_on_bikelane {
     view_label: "Vehicle Events"
     type: string
-    sql: ${TABLE}.`is_vehicle_on_bikelane` ;;
+    sql: ${TABLE}.`is_vehicle_on_bikelane`;;
   }
 
   dimension: is_vehicle_stopped_in_intersection {

@@ -6,6 +6,20 @@ include: "*.view"
 # include all the dashboards
 include: "*.dashboard"
 
+week_start_day: sunday
+
+explore: all_events {}
+
+explore: bike_events {}
+
+explore: not_yield_events {}
+
+explore: pedestrian_events {}
+
+explore: vehicle_events {}
+
+explore: vehicle_speed_toward_intersection {}
+
 # explore: all_events2 {
 #   join: bike_events {
 #     sql_on: ${all_events.time_hour} = ${bike_events.time_hour} date;;
@@ -25,14 +39,3 @@ include: "*.dashboard"
 #
 # }
 #
-explore: all_events {}
-
-explore: bike_events {}
-
-explore: not_yield_events {}
-
-explore: pedestrian_events {}
-
-explore: vehicle_events {}
-
-explore: vehicle_speed_toward_intersection {}
