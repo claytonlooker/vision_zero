@@ -212,10 +212,10 @@ view: all_events {
   measure: average_speed {
     type: average
     sql: ${speed} ;;
-    filters: {
-      field: event_type
-      value: "Vehicle_speed_toward_intersection"
-    }
+    # filters: {
+    #   field: event_type
+    #   value: "Vehicle_speed_toward_intersection"
+    # }
     drill_fields: [detail*]
     }
 
@@ -286,11 +286,6 @@ view: all_events {
       raw,
       time,
       time_of_day,
-      minute5,
-      minute15,
-      minute30,
-      hour6,
-      hour12,
       hour,
       hour_of_day,
       date,
@@ -302,7 +297,7 @@ view: all_events {
       quarter,
       year
     ]
-    drill_fields: [event_week, event_date, event_hour, event_minute30, event_minute15, event_minute5]
+    drill_fields: [event_week, event_date, event_hour]
     sql: ${TABLE}.time ;;
   }
 

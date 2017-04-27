@@ -56,4 +56,21 @@ view: vehicle_speed_toward_intersection {
     type: count
     drill_fields: []
   }
+
+  measure: average_speed {
+    type: average
+    sql: ${speed} ;;
+    drill_fields: [detail*]
+  }
+
+  set: detail {
+    fields: [
+      batch_id,
+      batch_status,
+      device_id,
+      intersection,
+      source_system,
+
+    ]
+  }
 }

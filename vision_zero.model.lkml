@@ -20,6 +20,11 @@ explore: vehicle_events {}
 
 explore: vehicle_speed_toward_intersection {}
 
+map_layer: my_neighborhood_layer {
+  file: "neighborhoods.topojson"
+  property_key: "community"
+}
+
 # explore: all_events2 {
 #   join: bike_events {
 #     sql_on: ${all_events.time_hour} = ${bike_events.time_hour} date;;
