@@ -162,7 +162,7 @@ view: all_events {
   measure: count {
     type: count
     drill_fields: [detail*]
-  }
+    }
 
   measure: bike_events {
     type: count
@@ -232,7 +232,9 @@ view: all_events {
   dimension: device_id {
     type: string
     sql: ${TABLE}.device_id ;;
-  }
+#    html: <img src="http://cdn.free-power-point-templates.com/articles/wp-content/uploads/2012/01/pie-chart.jpg" width=50 /> ;;
+    html: {{rendered_value}}<img src="https://localhost:9999/looks/2yq3Btfv65mK7cf4nsZk749pkzVkzxFf.png" width=50 /> ;;
+    }
 
   dimension: direction {
     type: string
@@ -241,6 +243,7 @@ view: all_events {
 
   dimension: heading_from {
     type: string
+
     sql: CASE WHEN heading_from = 'BE'
                 THEN 'Beacon East'
               WHEN heading_from = 'BW'
@@ -267,6 +270,7 @@ view: all_events {
 
   dimension: intersection {
     type: string
+    description: "Cross street"
     sql: ${TABLE}.intersection ;;
   }
 
@@ -285,6 +289,9 @@ view: all_events {
     timeframes: [
       raw,
       time,
+      minute10,
+      minute15,
+      minute30,
       time_of_day,
       hour,
       hour_of_day,

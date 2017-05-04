@@ -1,4 +1,5 @@
-connection: "visionzero"
+# connection: "visionzero"
+connection: "visionzero_hosted"
 
 # include all the views
 include: "*.view"
@@ -8,7 +9,15 @@ include: "*.dashboard"
 
 week_start_day: sunday
 
-explore: all_events {}
+explore: all_events {
+#  always_filter: {
+  #   filters: {
+  #     field: event_date
+  #     value: "last 7 days"
+  #   }
+  # }
+ }
+
 
 explore: bike_events {}
 
